@@ -53,7 +53,7 @@ module vector_scale #(
         end
 
     wire [3:0] shift = (max_val == 0 ) ? 4'd0 : ((4'd11 -msb_pos ));
-    wire [14:0] scale = 15'd15 <<shift;
+    wire [14:0] scale = 15'd15 <<shift; // shift scalling instead of unitvector from l2 norm, before it was truncate to 0. this works
 
     //multiply by scale factor
     wire [26:0] prod0 = val0 * scale;

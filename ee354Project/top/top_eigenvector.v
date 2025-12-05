@@ -99,7 +99,7 @@ module top_eigenvector (
     wire [16*4-1:0] matrix_grid_packed;
     wire [4*4-1:0] vector_seed_packed;
     
-    reg cell_lock_q;
+    reg cell_lock_q;// to lock in changing value
     
     reg [1:0] edit_row_d;
     reg [1:0] edit_col_d;
@@ -158,7 +158,7 @@ module top_eigenvector (
                 matrix_grid_d[i][j] = matrix_grid_q[i][j];
             end
             vector_seed_d[i] = vector_seed_q[i];
-        end
+        end// d ->q ff to for matric and vector vals
         
         //init matrix to default values
         if (rst_active) 
@@ -417,6 +417,7 @@ module top_eigenvector (
     wire any_button_pulse = btnl_pulse | btnr_pulse | btnu_pulse | btnd_pulse |btnc_pulse;
     
     //LEDs for debug
+    //update(kamsi): unused
     assign led[0] =cell_lock_q;
     assign led[1] = any_button_pulse;
     assign led[2] = sw0;

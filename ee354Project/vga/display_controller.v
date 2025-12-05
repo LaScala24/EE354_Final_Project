@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+// does all the work or display
 module display_controller (
     input  wire clk,
     input  wire bright,
@@ -139,7 +139,7 @@ module display_controller (
                     4: row_bits_vga = 5'b00001;
                     5: row_bits_vga = 5'b00001;
                     6: row_bits_vga = 5'b01110;
-                endcase
+                endcase// depending on digit displays numbera
                 default: row_bits_vga = 5'b00000;
             endcase
             if ((x < FONT_BASE_W) && (y < FONT_BASE_H))
@@ -177,7 +177,7 @@ module display_controller (
     parameter MAGENTA = 12'b1111_0000_1111;
     parameter GRAY =12'b0100_0100_0100;
     parameter BLUE = 12'b0011_0011_1111;
-    parameter ORANGE = 12'b1111_1000_0000;
+    parameter ORANGE = 12'b1111_1000_0000;//colors
 
     //display layout params
     localparam integer FONT_BASE_W = 5;

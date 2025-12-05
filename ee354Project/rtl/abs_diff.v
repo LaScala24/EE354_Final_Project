@@ -5,7 +5,7 @@ module abs_diff #(
 ) (
     input  wire [4 * WIDTH-1:0] vec_new,
     input  wire [4 * WIDTH-1:0] vec_old,
-    output wire [4 * WIDTH-1:0] vec_diff
+    output wire [4 * WIDTH-1:0] vec_diff// init vars 4 times width for overflow protection in the math
 );
 
     localparam integer NUM_LANES = 4;

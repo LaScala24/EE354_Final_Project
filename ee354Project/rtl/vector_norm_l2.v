@@ -1,5 +1,9 @@
 `timescale 1ns / 1ps
-
+// fsm to compute the l2 norm which is used to make unit vectors
+// Computes: norm = sqrt(V[0]^2 + V[1]^2 + V[2]^2 + V[3]^2)
+// FSM: STATE_IDLE -> STATE_ACCUM -> STATE_SQRT -> STATE_IDLE
+// ACCUM: Accumulate sum of squares over 4 cycles
+// SQRT: 
 module vector_norm_l2 #(
     parameter integer WIDTH = 4,
     parameter integer NORM_WIDTH = WIDTH + 2

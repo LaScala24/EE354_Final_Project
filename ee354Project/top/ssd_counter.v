@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+// difrent way of ssd scanning, by conv binary to bcd to display the number
 module ssd_counter 
 (
     input wire clk,

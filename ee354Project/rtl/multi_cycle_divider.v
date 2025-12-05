@@ -1,4 +1,9 @@
 `timescale 1ns / 1ps
+    // FSM: Restoring Division, brother told me about algo
+    // STATE_IDLE -> STATE_DIV -> STATE_DONE -> STATE_IDLE
+    // IDLE: Wait for start, initialize registers, check for divide-by-zero
+    // DIV: Loop WIDTH_QUOTIENT times, compute one quotient bit per cycle
+    // DONE: Signal result ready, return to IDLE
 
 module multi_cycle_divider #(
     parameter integer WIDTH_DIVIDEND = 12,
@@ -21,7 +26,7 @@ module multi_cycle_divider #(
 
     reg [1:0] state;
     reg [1:0] state_next;
-
+    // fsm to do divison
     reg [WIDTH_DIVIDEND-1:0] dividend_shift;
     reg [WIDTH_DIVIDEND-1:0] dividend_shift_next;
 
@@ -47,7 +52,7 @@ module multi_cycle_divider #(
 
     wire sub_ok = (rem_after_sub[WIDTH_DIVISOR] == 1'b0);
 
-    function [WIDTH_QUOTIENT-1:0] shift_in_bit;
+    function [WIDTH_QUOTIENT-1:0] shift_in_bit;// to bit shitf by a newbut amount
         input [WIDTH_QUOTIENT-1:0] current;
         input                      new_bit;
         begin

@@ -31,7 +31,8 @@ module matrix_memory #(
 
     reg signed [WIDTH-1:0] mem [0:3][0:3];
 
-    //We had to use this function from online to help convert the integer to a signed value - kamzi
+
+    //used to convert integer t a signed value, not used because we swtiched to unsigned-kamsi
     function automatic signed [WIDTH-1: 0] cast_val;
         input integer val;
         begin

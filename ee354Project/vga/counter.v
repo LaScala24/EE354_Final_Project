@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+//like seen in demmo
 module counter (
     input  wire clk,
     output wire hSync,

@@ -43,7 +43,7 @@ module max_finder #(
             begin
             pair1_reg <= pair1;
             pair2_reg <=pair2;
-            max_value <= ((pair1_reg > pair2_reg )) ? pair1_reg : pair2_reg;
+            max_value <= ((pair1_reg > pair2_reg )) ? pair1_reg : pair2_reg;// find the largest
             end
         end
 

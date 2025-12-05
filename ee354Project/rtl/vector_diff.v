@@ -11,9 +11,8 @@ module vector_diff #(
     output reg  [WIDTH-1:0] max_diff,
     output reg done
 );
-
-    localparam integer PIPE_CYCLES = 4;
-
+    //bug fix(kamsi): timing failed HORRENDOUSLY here and the old divider
+    localparam integer PIPE_CYCLES = 4;// 4 cycles to comp, split computation up. done for the sake of timing design, brother taught me to do
     reg [4*WIDTH-1:0] new_vec;
     reg [4*WIDTH-1:0] old_vec;
 
@@ -23,8 +22,8 @@ module vector_diff #(
     reg [4*WIDTH-1:0] old_vec_next;
     reg [4*WIDTH-1:0] diff_next;
 
-    reg [PIPE_CYCLES-1:0] start_pipe;
-    reg [PIPE_CYCLES-1:0] start_pipe_next;
+    reg [PIPE_CYCLES-1:0] start_pipe;// old
+    reg [PIPE_CYCLES-1:0] start_pipe_next;//new
 
     reg done_flag;
     reg done_flag_next;

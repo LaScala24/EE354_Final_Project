@@ -6,16 +6,16 @@ module matrix_vector_mult #(
     input  wire clk,
     input  wire reset,
     input  wire  start,
-    input  wire [16*4-1:0] A,
-    input  wire [4*4-1:0] V,
-    output reg  [4*OUT_WIDTH-1:0] Y,
+    input  wire [16*4-1:0] A,// 4 bit * 16 cells = 64
+    input  wire [4*4-1:0] V,// 4 bits * 4 cells = 16
+    output reg  [4*OUT_WIDTH-1:0] Y, //4 cells * 12bits(for mult overflow protection) = 48
     output reg done
 );
-
+    // calc par width for acc to prevent over flow
     localparam integer PARTIAL_WIDTH = (OUT_WIDTH >= 10) ? OUT_WIDTH + 2 : 12;
-    localparam [OUT_WIDTH-1:0] OUT_MAX = {OUT_WIDTH{1'b1}};
+    localparam [OUT_WIDTH-1:0] OUT_MAX = {OUT_WIDTH{1'b1}}; //max outwidth bits 
     localparam [PARTIAL_WIDTH-1:0] OUT_MAX_EXT = {{(PARTIAL_WIDTH-OUT_WIDTH){1'b0}}, OUT_MAX};
-
+    // state regs for iteration computation
     reg [1:0] row;
     reg [1:0] row_next;
     reg [1:0] col;
@@ -81,6 +81,8 @@ module matrix_vector_mult #(
         else if (busy) 
             begin
             //save result when done with row
+            //completed comptuer one row
+            //bug fix(kamsi): incorect math
             if (last_col) 
                 begin
 
@@ -119,7 +121,7 @@ module matrix_vector_mult #(
             done <= 1'b0;
             end 
         else 
-            begin
+            begin//state updates
             row <= row_next;
             col <= col_next;
             accum <= accum_next;

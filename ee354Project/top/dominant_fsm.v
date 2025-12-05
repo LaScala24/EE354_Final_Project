@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+// all the fsm does is drive signals for the datapath
 module dominant_fsm (
     input wire clk,
     input wire reset,
