@@ -10,7 +10,7 @@ module display_controller (
     input  wire cell_locked,
     input  wire sw0,
     input  wire sw1,
-    input  wire [2:0] sw_eps,
+    input  wire [2:0] sw_eps,// unused because we hardcoded it(kamsi)
     input  wire [63:0] matrix_a,
     input  wire [15:0] vector_v,
     input  wire [7:0] fsm_state,
@@ -20,7 +20,7 @@ module display_controller (
     input  wire [15:0] v_new,
     output reg  [11:0] rgb
 );
-
+// is not used, did manual instead
     function [19:0] bin16_to_bcd;
         input [15:0] value;
         //conver bin to bcd
@@ -341,7 +341,7 @@ module display_controller (
     wire in_iter_region = (px_vga >= ITER_X0) && (px_vga < ITER_X0 + 70) &&
                           (py_vga >= ITER_Y0) && (py_vga < ITER_Y0 + 30);
     
-    wire [9:0] vec_v_local_x = px_vga - VEC_V_X0;
+    wire [9:0] vec_v_local_x = px_vga - VEC_V_X0;// local vs global is vga vs top
     wire [9:0] vec_v_local_y = py_vga - VEC_V_Y0;
     wire [1:0] vec_v_idx = vec_v_local_y / VEC_V_CELL_H;
     wire [9:0] vec_v_cell_y = vec_v_local_y - (vec_v_idx * VEC_V_CELL_H);
@@ -425,11 +425,11 @@ module display_controller (
     assign vo_bar_h[0] = (vo_scaled[0] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vo_scaled[0];
     assign vo_bar_h[1] = (vo_scaled[1] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vo_scaled[1];
     assign vo_bar_h[2] = (vo_scaled[2] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vo_scaled[2];
-    assign vo_bar_h[3] = (vo_scaled[3] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vo_scaled[3];
+    assign vo_bar_h[3] = (vo_scaled[3] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vo_scaled[3];//old
     assign vn_bar_h[0] = (vn_scaled[0] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vn_scaled[0];
     assign vn_bar_h[1] = (vn_scaled[1] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vn_scaled[1];
     assign vn_bar_h[2] = (vn_scaled[2] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vn_scaled[2];
-    assign vn_bar_h[3] = (vn_scaled[3] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vn_scaled[3];
+    assign vn_bar_h[3] = (vn_scaled[3] > BAR_MAX_HEIGHT) ? BAR_MAX_HEIGHT : vn_scaled[3];//new
     
     //check if pixel is in old vector bar
     reg in_vo_bar;
