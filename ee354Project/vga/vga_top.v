@@ -27,7 +27,7 @@ module vga_top
     reg pulse;
     reg clk25;
 
-    //divide 100mhz to 25mhz for vga
+    //divide 100mhz to 25mhz for vga - shri said update this way, tried another way but didnt work due to complexity
     initial begin
         pulse = 1'b0;
         clk25 = 1'b0;
@@ -42,11 +42,11 @@ module vga_top
 
     wire bright;
 
-    //vga timing
+    //for the vga timing
     wire [9:0] hCount, vCount;
     wire [11:0] rgb;
 
-    //vga counter
+    //vga counter -_____ here
     counter vga_counter 
     (
         .clk(clk25),
@@ -57,7 +57,7 @@ module vga_top
         .vCount(vCount)
     );
 
-    //render display
+    //render display  for me
     display_controller renderer 
     (
         .clk(clk25),

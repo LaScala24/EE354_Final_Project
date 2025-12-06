@@ -1,11 +1,13 @@
 `timescale 1ns / 1ps
 
-module max_finder #(
+module max_finder 
+#(
     parameter integer WIDTH = 4
-) (
+) 
+(
     input  wire clk,
     input  wire reset,
-    input  wire [4*WIDTH-1:0] lane_values,
+    input  wire [4* WIDTH-1:0] lane_values,
     output reg  [WIDTH-1:0] max_value
 );
 
@@ -23,13 +25,13 @@ module max_finder #(
         end
     endgenerate
 
-    //find max of each pair
-    wire [WIDTH-1:0] pair1 = ((data[0] > data[1] )) ? data[0] : data[1];
-    wire [WIDTH-1:0] pair2 = (data[2] > data[3] ) ? data[2] : data[3];
+    //find max of each pair, this will then go into each register (below see)
+    wire [WIDTH - 1:0] pair1 = ((data[0] > data[1] )) ? data[0] : data[1];
+    wire [WIDTH - 1:0] pair2 = (data[2] > data[3] ) ? data[2] : data[3];
 
     //register pairs for final comparison
-    reg [WIDTH-1:0] pair1_reg;
-    reg [WIDTH-1:0] pair2_reg;
+    reg [WIDTH - 1:0] pair1_reg;
+    reg [WIDTH - 1:0] pair2_reg;
 
     always @(posedge clk) 
         begin

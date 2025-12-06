@@ -145,7 +145,7 @@ module dominant_datapath #(
     );
 
     always @(*) begin
-        //update regs based on ctrl signals
+        //update regs based on the control  signals
         first_iter_next = first_iter;
         y_next = y;
         max_diff_next = max_diff;
@@ -190,7 +190,7 @@ module dominant_datapath #(
             end
 
             SCALE_DIV: begin
-                //scaling done, save result
+                //scaling done then we must save result
                 if (scale_div_done ) begin
                     v_new_next = scaled_vector;
                     v_new_valid_next = 1'b1;
@@ -205,27 +205,36 @@ module dominant_datapath #(
         endcase
     end
 
-    always @(posedge clk) begin
-        if (reset) begin
+    always @(posedge clk) 
+    begin
+        if (reset) 
+        begin
             first_iter <= 1'b1;
-            y <= {(4*Y_WIDTH){1'b0}};
+
+            y <= {(4 * Y_WIDTH){1'b0}};
             max_diff <= 4'd0;
             scale_state <= SCALE_IDLE;
+
             max_start <= 1'b0;
             scale_start <= 1'b0;
             scale_done_reg <= 1'b0;
-            v_new <= {(4*SCALE_OUT){1'b0}};
+            v_new <= {(4 * SCALE_OUT){1'b0}};
             v_new_valid <= 1'b0;
-        end else begin
+
+        end 
+        else begin
             first_iter <= first_iter_next;
             y <= y_next;
+
             max_diff <= max_diff_next;
             scale_state <= scale_state_next;
             max_start <= max_start_next;
+
             scale_start <= scale_start_next;
             scale_done_reg <= scale_done_next;
             v_new <= v_new_next;
             v_new_valid <= v_new_valid_next;
+
         end
     end
 
@@ -235,6 +244,7 @@ module dominant_datapath #(
     assign y_out = y;
     assign max_out = max_value;
     assign v_new_out = v_new;
+    
     assign {v3, v2, v1, v0} = v_new[VECTOR_WIDTH-1:0];
     assign {v_old3, v_old2, v_old1, v_old0} = v_old_bus;
 

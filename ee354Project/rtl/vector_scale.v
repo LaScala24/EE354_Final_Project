@@ -1,10 +1,13 @@
+
 `timescale 1ns / 1ps
 
-module vector_scale #(
+module vector_scale 
+#(
     parameter integer IN_WIDTH = 12,
     parameter integer OUT_WIDTH = 4,
     parameter integer MAX_WIDTH = 12
-) (
+) 
+(
     input  wire clk,
     input  wire reset,
     input  wire start,

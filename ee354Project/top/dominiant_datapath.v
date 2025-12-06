@@ -1,6 +1,9 @@
 `timescale 1ns / 1ps
+
 // UN UNSED FILE, TYPE IN NAME
-module dominant_datapath #(
+
+module dominant_datapath 
+#(
     parameter integer WIDTH = 8
 ) (
     input  wire clk,
@@ -11,14 +14,17 @@ module dominant_datapath #(
     input  wire start_mult,
     input  wire start_scale,
     input  wire start_diff,
+
     input  wire signed [15:0] A00, A01, A02, A03,
     input  wire signed [15:0] A10, A11, A12, A13,
     input  wire signed [15:0]  A20, A21, A22, A23,
-    input  wire signed [15:0] A30, A31, A32, A33,
+    input  wire signed [15:0] A30, A31,  A32, A33,
+
     output wire signed [15:0] v0,
     output wire signed [15:0] v1,
     output wire signed [15:0] v2,
     output wire signed [15:0] v3,
+
     output wire signed [15:0] max_d_out
 );
 

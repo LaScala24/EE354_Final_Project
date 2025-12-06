@@ -2,7 +2,7 @@
 
 module matrix_vector_mult #(
     parameter integer OUT_WIDTH = 12
-) (
+) ( //
     input  wire clk,
     input  wire reset,
     input  wire  start,
@@ -11,11 +11,11 @@ module matrix_vector_mult #(
     output reg  [4*OUT_WIDTH-1:0] Y, //4 cells * 12bits(for mult overflow protection) = 48
     output reg done
 );
-    // calc par width for acc to prevent over flow
+    //calc par width for acc to prevent over flow
     localparam integer PARTIAL_WIDTH = (OUT_WIDTH >= 10) ? OUT_WIDTH + 2 : 12;
     localparam [OUT_WIDTH-1:0] OUT_MAX = {OUT_WIDTH{1'b1}}; //max outwidth bits 
     localparam [PARTIAL_WIDTH-1:0] OUT_MAX_EXT = {{(PARTIAL_WIDTH-OUT_WIDTH){1'b0}}, OUT_MAX};
-    // state regs for iteration computation
+    //state regs for iteration computation
     reg [1:0] row;
     reg [1:0] row_next;
     reg [1:0] col;
@@ -57,7 +57,9 @@ module matrix_vector_mult #(
     wire [7:0] prod = matrix[row][col] *vec[col];
     wire last_col = ((col == 2'd3 ));
     wire last_row = (row ==2'd3 );
+
     wire [PARTIAL_WIDTH-1:0] sum = accum +prod;
+
     wire [OUT_WIDTH-1:0] result = (sum > OUT_MAX_EXT) ? OUT_MAX : sum[OUT_WIDTH-1:0];
 
     always @(*) 
@@ -86,7 +88,7 @@ module matrix_vector_mult #(
             if (last_col) 
                 begin
 
-                y_next[row*OUT_WIDTH +: OUT_WIDTH] = result;
+                y_next[row * OUT_WIDTH +: OUT_WIDTH] = result; //from result
                 accum_next = {PARTIAL_WIDTH{1'b0}};
                 col_next = 2'd0;
                 if (last_row) 
@@ -103,7 +105,7 @@ module matrix_vector_mult #(
                 else 
                     begin
                 accum_next =sum;
-                col_next = col +1'b1;
+                col_next = col + 1'b1;
                 end
             end
         end
@@ -115,9 +117,9 @@ module matrix_vector_mult #(
             row <= 2'd0;
             col <= 2'd0;
             accum <= {PARTIAL_WIDTH{1'b0}};
-            y <= {4*OUT_WIDTH{1'b0}};
+            y <= {4 * OUT_WIDTH{1'b0}};
             busy <= 1'b0;
-            Y <= {4*OUT_WIDTH{1'b0}};
+            Y <= {4 * OUT_WIDTH{1'b0}};
             done <= 1'b0;
             end 
         else 

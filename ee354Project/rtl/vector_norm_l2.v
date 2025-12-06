@@ -1,13 +1,20 @@
 `timescale 1ns / 1ps
+
 // fsm to compute the l2 norm which is used to make unit vectors
 // Computes: norm = sqrt(V[0]^2 + V[1]^2 + V[2]^2 + V[3]^2)
 // FSM: STATE_IDLE -> STATE_ACCUM -> STATE_SQRT -> STATE_IDLE
 // ACCUM: Accumulate sum of squares over 4 cycles
 // SQRT: 
-module vector_norm_l2 #(
+
+
+
+
+module vector_norm_l2 
+#(
     parameter integer WIDTH = 4,
     parameter integer NORM_WIDTH = WIDTH + 2
-) (
+) 
+(
     input  wire clk,
     input  wire reset,
     input  wire start,
@@ -16,7 +23,7 @@ module vector_norm_l2 #(
     output reg done
 );
 
-    localparam integer SUM_BITS = 2*WIDTH + 4;
+    localparam integer SUM_BITS = 2 * WIDTH + 4;
     localparam [1:0] STATE_IDLE = 2'd0;
     localparam [1:0] STATE_ACCUM = 2'd1;
     localparam [1:0] STATE_SQRT = 2'd2;
@@ -55,8 +62,8 @@ module vector_norm_l2 #(
     //get current sample and square it
     wire [WIDTH-1:0] sample = lane_values[idx];
     wire [2*WIDTH-1:0] sample_sq = sample *sample;
-    wire [SUM_BITS-1:0] sample_sq_ext ={{(SUM_BITS-2*WIDTH){1'b0}}, sample_sq};
-    wire [SUM_BITS-1:0] sqrt_seed = {{(SUM_BITS-1){1'b0}}, 1'b1} << (2*WIDTH - 2);
+    wire [SUM_BITS-1:0] sample_sq_ext ={{(SUM_BITS-2 * WIDTH){1'b0}}, sample_sq};
+    wire [SUM_BITS-1:0] sqrt_seed = {{(SUM_BITS - 1){1'b0}}, 1'b1} << (2 * WIDTH - 2);
 
     always @(*) 
         begin
@@ -143,23 +150,29 @@ module vector_norm_l2 #(
         begin
         if (reset) 
             begin
+
             state <= STATE_IDLE;
             idx <= 2'd0;
             sum_sq <= {SUM_BITS{1'b0}};
             rem <= {SUM_BITS{1'b0}};
-            root <= {(NORM_WIDTH+1){1'b0}};
+            root <= {(NORM_WIDTH + 1){1'b0}};
+
             bit_val <= {SUM_BITS{1'b0}};
             iter <= 5'd0;
+
             norm_out <= {NORM_WIDTH{1'b0}};
             done <= 1'b0;
+            
             end 
         else 
             begin
+
             state <= state_next;
             idx <= idx_next;
             sum_sq <= sum_sq_next;
             rem <= rem_next;
             root <= root_next;
+
             bit_val <= bit_val_next;
             iter <= iter_next;
 

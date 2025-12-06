@@ -6,7 +6,7 @@ module vector_max #(
     input  wire clk,
     input  wire reset,
     input  wire start,
-    input  wire [4*WIDTH-1:0] vec_in,
+    input  wire [4 * WIDTH-1:0] vec_in,
     output reg  [WIDTH-1:0] max_out,
     output reg  done
 );
@@ -19,13 +19,13 @@ module vector_max #(
     reg done_next;
     reg [WIDTH-1:0] max_next;
 
-    //unpack vector into 4 lanes
-    assign vals[0] = vec_in[WIDTH-1:0];
-    assign vals[1] =vec_in[2*WIDTH-1:WIDTH];
-    assign vals[2] = vec_in[3*WIDTH-1:2*WIDTH];
-    assign vals[3] = vec_in[4*WIDTH-1:3*WIDTH];
+    //unpack vector into the 4 different vals utilizedd for comparison
+    assign vals[0] = vec_in[WIDTH -1:0];
+    assign vals[1] =vec_in[2 * WIDTH-1:WIDTH];
+    assign vals[2] = vec_in[3 * WIDTH - 1:2 * WIDTH];
+    assign vals[3] = vec_in[4 * WIDTH-1:3 * WIDTH];
 
-    //compare pairs then compare results
+    //compare pairs then compare results - brings out max for each comparison 
     wire [WIDTH-1:0] max_pair1 = (vals[0] > vals[1]) ? vals[0] : vals[1];
     wire [WIDTH-1:0] max_pair2 = (vals[2] > vals[3]) ? vals[2] : vals[3];
     wire [WIDTH-1:0] max_final = (max_pair1 > max_pair2) ? max_pair1 : max_pair2;

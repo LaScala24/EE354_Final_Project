@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 //like seen in demo
-module block_digit_renderer (
+module block_digit_renderer 
+(
     input  wire [3:0] digit,
     input  wire [9:0] px,
     input  wire [9:0] py,
